@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @EnableZeebeClient
-@Deployment(resources = "classpath:customer-onboarding.bpmn")
+//@Deployment(resources = "classpath:customer-onboarding.bpmn")
 public class CustomerOnboardingSpringbootApplication {
 
 	public static void main(String[] args) {
