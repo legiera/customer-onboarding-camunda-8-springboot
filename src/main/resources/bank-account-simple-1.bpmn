@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1ynch2p" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.11.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0">
+  <bpmn:process id="bank-account-simple" name="Simple Bank Account" isExecutable="true">
+    <bpmn:extensionElements>
+      <zeebe:userTaskForm id="userTaskForm_14m47c6">{
+  "components": [
+    {
+      "label": "Should we create a bank account for this Client?",
+      "type": "checkbox",
+      "id": "Field_1n7851c",
+      "key": "automaticProcessing",
+      "description": "Can this request be processed automatically without further manual interaction?"
+    }
+  ],
+  "type": "default",
+  "id": "Form_0w8g0i0",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.0.0",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.2.0"
+  },
+  "schemaVersion": 4
+}</zeebe:userTaskForm>
+    </bpmn:extensionElements>
+    <bpmn:startEvent id="StartEventCustomer" name="Bank Account creation requested">
+      <bpmn:outgoing>Flow_0vp3dun</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Activity_1gk3quj" name="Score customer">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="scoreCustomer" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0vp3dun</bpmn:incoming>
+      <bpmn:outgoing>Flow_097hbg5</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="TaskApproveCustomerorder" name="review client request">
+      <bpmn:extensionElements>
+        <zeebe:formDefinition formKey="camunda-forms:bpmn:userTaskForm_14m47c6" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_097hbg5</bpmn:incoming>
+      <bpmn:outgoing>Flow_1dv1eyk</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_0jids7b" name="Decision?">
+      <bpmn:incoming>Flow_1dv1eyk</bpmn:incoming>
+      <bpmn:outgoing>Flow_0mtgwrn</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1skb01l</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Activity_0m8soji" name="Create Bank Account">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="createNewBankAccount" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0mtgwrn</bpmn:incoming>
+      <bpmn:outgoing>Flow_1736edz</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_13w0fk2">
+      <bpmn:incoming>Flow_1736edz</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="Event_1rq90hd" name="bank Account rejected">
+      <bpmn:incoming>Flow_1skb01l</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0vp3dun" sourceRef="StartEventCustomer" targetRef="Activity_1gk3quj" />
+    <bpmn:sequenceFlow id="Flow_097hbg5" sourceRef="Activity_1gk3quj" targetRef="TaskApproveCustomerorder" />
+    <bpmn:sequenceFlow id="Flow_1dv1eyk" sourceRef="TaskApproveCustomerorder" targetRef="Gateway_0jids7b" />
+    <bpmn:sequenceFlow id="Flow_0mtgwrn" name="Accepted" sourceRef="Gateway_0jids7b" targetRef="Activity_0m8soji">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=(automaticProcessing=true)</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1736edz" sourceRef="Activity_0m8soji" targetRef="Event_13w0fk2" />
+    <bpmn:sequenceFlow id="Flow_1skb01l" name="Rejected" sourceRef="Gateway_0jids7b" targetRef="Event_1rq90hd">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=(automaticProcessing=false)</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="bank-account-simple">
+      <bpmndi:BPMNShape id="Gateway_0jids7b_di" bpmnElement="Gateway_0jids7b" isMarkerVisible="true">
+        <dc:Bounds x="615" y="105" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="615" y="83" width="49" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0m8soji_di" bpmnElement="Activity_0m8soji">
+        <dc:Bounds x="720" y="90" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_13w0fk2_di" bpmnElement="Event_13w0fk2">
+        <dc:Bounds x="892" y="112" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1rq90hd_di" bpmnElement="Event_1rq90hd">
+        <dc:Bounds x="622" y="222" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="607" y="265" width="67" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEventCustomer">
+        <dc:Bounds x="179" y="112" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="163" y="155" width="68" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1gk3quj_di" bpmnElement="Activity_1gk3quj">
+        <dc:Bounds x="270" y="90" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0r73zev_di" bpmnElement="TaskApproveCustomerorder">
+        <dc:Bounds x="440" y="90" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1dv1eyk_di" bpmnElement="Flow_1dv1eyk">
+        <di:waypoint x="540" y="130" />
+        <di:waypoint x="615" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0mtgwrn_di" bpmnElement="Flow_0mtgwrn">
+        <di:waypoint x="665" y="130" />
+        <di:waypoint x="720" y="130" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="670" y="112" width="46" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1skb01l_di" bpmnElement="Flow_1skb01l">
+        <di:waypoint x="640" y="155" />
+        <di:waypoint x="640" y="222" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="658" y="186" width="44" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1736edz_di" bpmnElement="Flow_1736edz">
+        <di:waypoint x="820" y="130" />
+        <di:waypoint x="892" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0vp3dun_di" bpmnElement="Flow_0vp3dun">
+        <di:waypoint x="215" y="130" />
+        <di:waypoint x="270" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_097hbg5_di" bpmnElement="Flow_097hbg5">
+        <di:waypoint x="370" y="130" />
+        <di:waypoint x="440" y="130" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
