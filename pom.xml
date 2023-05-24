@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>io.berndruecker</groupId>
+	<groupId>io.camunda.workshop</groupId>
 	<artifactId>customer-onboarding-camunda-8-springboot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
@@ -14,6 +14,9 @@
 		<maven.compiler.target>17</maven.compiler.target>
 		<spring.boot.version>3.0.1</spring.boot.version>
 		<zeebe.version>8.1.17</zeebe.version>
+		<slf4j.version>2.0.6</slf4j.version>
+		<jquery.version>3.6.2</jquery.version>
+		<maven-surefire-plugin.version>3.0.0-M8</maven-surefire-plugin.version>
 	</properties>
 
 	<dependencies>
@@ -21,7 +24,7 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>2.0.6</version>
+			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -57,7 +60,7 @@
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>jquery</artifactId>
-			<version>3.6.1</version>
+			<version>${jquery.version}</version>
 		</dependency>
 	</dependencies>
 
@@ -71,13 +74,13 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.0.0-M8</version>
+				<version>${maven-surefire-plugin.version}</version>
 			</plugin>
 			<plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>              
                 <configuration>                         
-    				  <mainClass>io.berndruecker.onboarding.customer.BankSpringbootApplication</mainClass>
+    				  <mainClass>io.camunda.workshop.customer.CustomerOnboardingSpringbootApplication</mainClass>
                 </configuration>
             </plugin>
 		</plugins>		

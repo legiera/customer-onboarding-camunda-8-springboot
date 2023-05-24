@@ -1,8 +1,6 @@
 # Customer Onboarding Process
 
-*Process solution example for customer onboarding as used in the OReilly book [Practical Process Automation](https://processautomationbook.com/).*
-
-![Customer Onboarding](docs/customer-onboarding-simple.png)
+![Customer Onboarding](docs/bank-account-simple.png)
 
 This following stack is used:
 
@@ -18,20 +16,14 @@ The process model contains three tasks:
 
 * A service task that executes Java Code to score customers (using the stateless Camunda DMN engine)
 * A user task so that humans can approve customer orders (or not)
-* A service task that executes glue code to call the REST API of a CRM system
+* A service task that executes Java Code to create bank account
 
 The process solution is a Maven project and contains:
 
 * The onboarding process model as BPMN
 * Source code to provide a REST endpoint for clients
 * Java code to do the customer scoring
-* Glue code to implement the REST call to the CRM system
-* Fake for CRM system providing a REST API that can be called (to allow running this example self-contained)
-
-
-# How To Run
-
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=QUB0dSBBMPM" target="_blank"><img src="http://img.youtube.com/vi/QUB0dSBBMPM/0.jpg" alt="Walkthrough" width="240" height="180" border="10" /></a>
+* Java code to create bank account
 
 ## Create Camunda Platform 8 Cluster
 
@@ -66,6 +58,4 @@ You can work on the user task using Camunda Tasklist, also linked via the Cloud 
 
 There is also an extended process model that adds some more tasks in the process: 
 
-![Customer Onboarding](docs/customer-onboarding-extended.png)
-
-You can find that in another repository on GitHub: https://github.com/berndruecker/customer-onboarding-camundacloud-springboot-extended
+![Customer Onboarding](docs/bank-account-extended.png)
