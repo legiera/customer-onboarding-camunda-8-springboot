@@ -1,7 +1,5 @@
 # Customer Onboarding Process
 
-*Process solution example for customer onboarding as used in the OReilly book [Practical Process Automation](https://processautomationbook.com/).*
-
 ![Customer Onboarding](docs/bank-account-simple.png)
 
 This following stack is used:
@@ -18,7 +16,7 @@ The process model contains three tasks:
 
 * A service task that executes Java Code to score customers (using the stateless Camunda DMN engine)
 * A user task so that humans can approve customer orders (or not)
-* A service task that executes glue code to call the REST API of a CRM system
+* A service task that executes Java Code to create bank account
 
 The process solution is a Maven project and contains:
 
