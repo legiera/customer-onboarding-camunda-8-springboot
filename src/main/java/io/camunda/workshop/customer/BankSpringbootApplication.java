@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CustomerOnboardingSpringbootApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CustomerOnboardingSpringbootApplication.class, args);
+		SpringApplication.run(BankSpringbootApplication.class, args);
 	}
 
 

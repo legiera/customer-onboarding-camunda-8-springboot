@@ -80,7 +80,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>              
                 <configuration>                         
-    				  <mainClass>io.camunda.workshop.customer.CustomerOnboardingSpringbootApplication</mainClass>
+    				  <mainClass>io.camunda.workshop.customer.BankSpringbootApplication</mainClass>
                 </configuration>
             </plugin>
 		</plugins>		
